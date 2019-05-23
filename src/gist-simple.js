@@ -40,6 +40,15 @@ class GistSimple {
         self.options = Object.assign({}, self.defaults, pureDataOptions, userOptions);
         self.pureOptions = Object.assign({}, self.options);
 
+        // convert strings options to boolean
+        ['linesExpanded', 'showFooter', 'showLineNumbers', 'enableCache'].forEach((item) => {
+            if (self.options[item] === 'true') {
+                self.options[item] = true;
+            } else if (self.options[item] === 'false') {
+                self.options[item] = false;
+            }
+        });
+
         self.init();
     }
 
