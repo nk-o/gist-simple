@@ -9,6 +9,9 @@ module.exports = function () {
                 }, {
                     test: /\.svg$/,
                     loader: 'svg-inline-loader',
+                    options: {
+                        removeSVGTagAttrs: false,
+                    },
                 },
             ],
         },
