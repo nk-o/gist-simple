@@ -225,7 +225,7 @@ class GistSimple {
         self.$container.html('');
 
         // delete GistSimple instance from container
-        delete self.$container.GistSimple;
+        delete self.$container[0].GistSimple;
 
         // call onDestroyEnd event
         if (self.options.onDestroyEnd) {
