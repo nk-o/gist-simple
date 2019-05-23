@@ -25,6 +25,14 @@ class GistSimple {
             showFooter: true,
             showLineNumbers: true,
             enableCache: true,
+
+            onInit: null, // () => {}
+            onInitEnd: null, // () => {}
+            onDestroy: null, // () => {}
+            onDestroyEnd: null, // () => {}
+            onAjaxBeforeSend: null, // () => {}
+            onAjaxSuccess: null, // (response) => {}
+            onAjaxLoaded: null, // () => {}
         };
 
         // prepare data-options
@@ -58,6 +66,11 @@ class GistSimple {
         const url = `https://gist.github.com/${options.id}.json`;
         const { lines } = options;
         const data = {};
+
+        // call onInit event
+        if (self.options.onInit) {
+            self.options.onInit.call(self);
+        }
 
         if (options.file) {
             data.file = options.file;
@@ -129,6 +142,11 @@ class GistSimple {
                 if (!options.showLineNumbers) {
                     self.removeLineNumbers();
                 }
+
+                // call onAjaxLoaded event
+                if (self.options.onAjaxLoaded) {
+                    self.options.onAjaxLoaded.call(self, response);
+                }
             } else {
                 self.insertContent(`Failed loading gist ${url}`, true);
             }
@@ -145,6 +163,11 @@ class GistSimple {
             dataType: 'jsonp',
             timeout: 20000,
             beforeSend() {
+                // call onAjaxBeforeSend event
+                if (self.options.onAjaxBeforeSend) {
+                    self.options.onAjaxBeforeSend.call(self);
+                }
+
                 // option to enable caching of the gists
                 if (enableCache) {
                     if (cache[cacheUrl]) {
@@ -166,17 +189,48 @@ class GistSimple {
                 return true;
             },
             success(response) {
+                // call onAjaxSuccess event
+                if (self.options.onAjaxSuccess) {
+                    self.options.onAjaxSuccess.call(self, response);
+                }
+
                 if (enableCache) {
                     if (cache[cacheUrl]) {
                         cache[cacheUrl].resolve(response);
                     }
                 }
+
                 successCallback(response);
             },
             error(jqXHR, textStatus) {
                 errorCallBack(textStatus);
             },
         });
+
+        // call onInitEnd event
+        if (self.options.onInitEnd) {
+            self.options.onInitEnd.call(self);
+        }
+    }
+
+    destroy() {
+        const self = this;
+
+        // call onDestroy event
+        if (self.options.onDestroy) {
+            self.options.onDestroy.call(self);
+        }
+
+        // remove content
+        self.$container.html('');
+
+        // delete GistSimple instance from container
+        delete self.$container.GistSimple;
+
+        // call onDestroyEnd event
+        if (self.options.onDestroyEnd) {
+            self.options.onDestroyEnd.call(self);
+        }
     }
 
     chunkBy(items, predicate) {
