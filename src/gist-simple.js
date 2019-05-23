@@ -54,9 +54,11 @@ class GistSimple {
             data.file = options.file;
         }
 
+        self.$container.addClass('gist-simple');
+
         // if the id doesn't exist, then ignore the code block
         if (!options.id) {
-            self.insertContent('Gist ID is required');
+            self.insertContent('Gist ID is required', true);
             return;
         }
 
@@ -64,7 +66,7 @@ class GistSimple {
         const enableCache = options.enableCache || cache[cacheUrl];
 
         // show preloader.
-        self.insertContent(iconPreloader);
+        self.insertContent(iconPreloader, true);
 
         function successCallback(response) {
             // the html payload is in the div property
@@ -119,12 +121,12 @@ class GistSimple {
                     self.removeLineNumbers();
                 }
             } else {
-                self.insertContent(`Failed loading gist ${url}`);
+                self.insertContent(`Failed loading gist ${url}`, true);
             }
         }
 
         function errorCallBack(textStatus) {
-            self.insertContent(`Failed loading gist ${url}: ${textStatus}`);
+            self.insertContent(`Failed loading gist ${url}: ${textStatus}`, true);
         }
 
         // request the json version of this gist
@@ -216,7 +218,10 @@ class GistSimple {
     }
 
     // insert content.
-    insertContent(content) {
+    insertContent(content, wrapper = false) {
+        if (wrapper) {
+            content = $('<div class="gist-simple-wrap">').html(content);
+        }
         this.$container.html(content);
     }
 
