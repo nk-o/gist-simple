@@ -1,6 +1,8 @@
 ## Gist Simple
 jQuery plugin for Gist code loading.
 
+## [Demo](https://codepen.io/_nK/pen/KLQZqr)
+
 ## Getting Started
 
 ```html
@@ -19,15 +21,15 @@ Link directly from [unpkg](https://unpkg.com/)
 
 ### A. Data attribute way
 ```html
-<div data-id="1725cbea1ce824f1fea776d5c46f4b7a" data-file="file-dev-jquery-events-js" class="gist-simple"></div>
+<div class="gist-simple" data-id="b58861072e53b12430ec2f78a99dbe4d" data-file="example-1.html"></div>
 ```
 Note: You can use all available options as data attributes. For example: `data-id`, `data-file`, `data-show-footer`, etc...
 
 ### B. jQuery way
 ```javascript
 $('.gist-simple').gistsimple({
-    id: '1725cbea1ce824f1fea776d5c46f4b7a',
-    file: 'file-dev-jquery-events-js',
+    id: 'b58861072e53b12430ec2f78a99dbe4d',
+    file: 'example-1.html',
 });
 ```
 
