@@ -52,6 +52,16 @@ gulp.task('js', () => {
         .pipe(browserSync.stream());
 });
 
+/**
+ * CSS Task
+ */
+gulp.task('css', () => {
+    return gulp.src('src/*.css')
+        .pipe($.header(getMainHeader()))
+        .pipe(gulp.dest('dist'))
+        .pipe(browserSync.stream());
+});
+
 
 /**
  * BrowserSync Task
@@ -70,6 +80,7 @@ gulp.task('browser_sync', () => {
 gulp.task('dev', () => {
     $.sequence('browser_sync', 'build', () => {
         gulp.watch('src/*.js', ['js']);
+        gulp.watch('src/*.css', ['css']);
     });
 });
 
@@ -77,7 +88,7 @@ gulp.task('dev', () => {
  * Build (default) Task
  */
 gulp.task('build', (cb) => {
-    $.sequence('clean', ['js'], cb);
+    $.sequence('clean', ['js', 'css'], cb);
 });
 
 gulp.task('default', ['build']);

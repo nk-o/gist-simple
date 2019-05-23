@@ -4,12 +4,14 @@ jQuery plugin for Gist code loading.
 ## Getting Started
 
 ```html
+<link type="text/css" rel="stylesheet" href="gist-simple/dist/gist-simple.css">
 <script src="gist-simple/dist/gist-simple.min.js"></script>
 ```
 
 #### CDN
 Link directly from [unpkg](https://unpkg.com/)
 ```html
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/gist-simple@1/dist/gist-simple.css">
 <script src="https://unpkg.com/gist-simple@1/dist/gist-simple.min.js"></script>
 ```
 

@@ -1,0 +1,15 @@
+.gist-simple .gist-simple-wrap {
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 1em;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #333;
+    text-align: left;
+    background: #fff;
+}
+.gist-simple .gist-simple-wrap svg {
+    display: block;
+    margin: 0 auto;
+}
