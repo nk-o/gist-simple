@@ -1,6 +1,6 @@
 /*!
  * Name    : Gist Simple - jQuery Gist Loader
- * Version : 1.0.0
+ * Version : 1.0.1
  * Author  : nK <https://nkdev.info>
  * GitHub  : https://github.com/nk-o/gist-simple
  * Based   : https://github.com/blairvanderhoof/gist-embed by Blair Vanderhoof
@@ -151,7 +151,21 @@ function () {
       highlightLines: '',
       showFooter: true,
       showLineNumbers: true,
-      enableCache: true
+      enableCache: true,
+      onInit: null,
+      // () => {}
+      onInitEnd: null,
+      // () => {}
+      onDestroy: null,
+      // () => {}
+      onDestroyEnd: null,
+      // () => {}
+      onAjaxBeforeSend: null,
+      // () => {}
+      onAjaxSuccess: null,
+      // (response) => {}
+      onAjaxLoaded: null // () => {}
+
     }; // prepare data-options
 
     var dataOptions = self.$container[0].dataset || {};
@@ -167,9 +181,9 @@ function () {
     self.pureOptions = Object.assign({}, self.options); // convert strings options to boolean
 
     ['linesExpanded', 'showFooter', 'showLineNumbers', 'enableCache'].forEach(function (item) {
-      if ('true' === self.options[item]) {
+      if (self.options[item] === 'true') {
         self.options[item] = true;
-      } else if ('false' === self.options[item]) {
+      } else if (self.options[item] === 'false') {
         self.options[item] = false;
       }
     });
@@ -183,7 +197,11 @@ function () {
       var options = self.options;
       var url = "https://gist.github.com/".concat(options.id, ".json");
       var lines = options.lines;
-      var data = {};
+      var data = {}; // call onInit event
+
+      if (self.options.onInit) {
+        self.options.onInit.call(self);
+      }
 
       if (options.file) {
         data.file = options.file;
@@ -247,6 +265,11 @@ function () {
 
           if (!options.showLineNumbers) {
             self.removeLineNumbers();
+          } // call onAjaxLoaded event
+
+
+          if (self.options.onAjaxLoaded) {
+            self.options.onAjaxLoaded.call(self, response);
           }
         } else {
           self.insertContent("Failed loading gist ".concat(url), true);
@@ -264,7 +287,12 @@ function () {
         dataType: 'jsonp',
         timeout: 20000,
         beforeSend: function beforeSend() {
-          // option to enable caching of the gists
+          // call onAjaxBeforeSend event
+          if (self.options.onAjaxBeforeSend) {
+            self.options.onAjaxBeforeSend.call(self);
+          } // option to enable caching of the gists
+
+
           if (enableCache) {
             if (cache[cacheUrl]) {
               // loading the response from cache and preventing the ajax call
@@ -283,6 +311,11 @@ function () {
           return true;
         },
         success: function success(response) {
+          // call onAjaxSuccess event
+          if (self.options.onAjaxSuccess) {
+            self.options.onAjaxSuccess.call(self, response);
+          }
+
           if (enableCache) {
             if (cache[cacheUrl]) {
               cache[cacheUrl].resolve(response);
@@ -294,7 +327,29 @@ function () {
         error: function error(jqXHR, textStatus) {
           errorCallBack(textStatus);
         }
-      });
+      }); // call onInitEnd event
+
+      if (self.options.onInitEnd) {
+        self.options.onInitEnd.call(self);
+      }
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var self = this; // call onDestroy event
+
+      if (self.options.onDestroy) {
+        self.options.onDestroy.call(self);
+      } // remove content
+
+
+      self.$container.html(''); // delete GistSimple instance from container
+
+      delete self.$container[0].GistSimple; // call onDestroyEnd event
+
+      if (self.options.onDestroyEnd) {
+        self.options.onDestroyEnd.call(self);
+      }
     }
   }, {
     key: "chunkBy",
@@ -577,7 +632,7 @@ module.exports = g;
 /* 4 */
 /***/ (function(module, exports) {
 
-module.exports = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M28.4375 2.23438C32.8672 4.45312 35.9063 7.375 37.8906 11.7969L35.4375 12.9687C33.875 9.76562 30.5156 6.40625 27.2656 4.80469\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M38.5937 13.2031C40.1562 17.8906 40.2344 22.1094 38.5156 26.6406L35.9531 25.75C37.125 22.3672 37.125 17.625 35.9531 14.1875\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.125s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M37.9219 28.0625C35.7109 32.4844 32.7813 35.5234 28.3594 37.5156L27.1719 35.0625C30.3984 33.5 33.75 30.1406 35.3516 26.8906\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.250s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M26.9141 38.1641C22.2266 39.7266 18.0078 39.8047 13.4766 38.0859L14.3672 35.5078C17.7422 36.6797 22.4922 36.6797 25.9297 35.5078\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.375s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M12.0547 37.7187C7.63281 35.5 4.59375 32.5781 2.60156 28.1562L5.05469 26.9688C6.61719 30.1953 9.97656 33.5469 13.2266 35.1484\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.500s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M1.85156 26.7734C0.289062 22.0859 0.210938 17.8672 1.92969 13.3359L4.50781 14.2266C3.33594 17.625 3.33594 22.3516 4.50781 25.7891\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.625s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M2.48438 11.7969C4.6875 7.35938 7.61719 4.32031 12.0312 2.34375L13.2266 4.78906C10.0078 6.35156 6.66406 9.71094 5.05469 12.9609\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.750s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path d=\"M13.5156 1.64062C18.2031 0.078125 22.4219 0 26.9531 1.71875L26.0547 4.28125C22.6719 3.10937 17.9297 3.10937 14.4922 4.28125\" fill=\"#A3A3A3\"><animate attributeName=\"fill\" values=\"#A3A3A3;#DDDDDD;#A3A3A3;#A3A3A3\" begin=\"0.875s\" dur=\"1s\" repeatCount=\"indefinite\"></animate></path><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M30.05 15.1376C30.245 14.6452 30.875 12.6913 29.855 10.0449C29.855 10.0449 28.28 9.53722 24.695 12.0451C23.195 11.6143 21.59 11.5527 20 11.5527C18.41 11.5527 16.805 11.6143 15.305 12.0451C11.72 9.52183 10.145 10.0449 10.145 10.0449C9.125 12.6913 9.755 14.6452 9.95 15.1376C8.735 16.4761 8 18.1993 8 20.2917C8 28.2153 12.995 30 19.97 30C26.945 30 32 28.2153 32 20.2917C32 18.1993 31.265 16.4761 30.05 15.1376ZM20 28.4922C15.05 28.4922 11.03 28.2614 11.03 23.3381C11.03 22.1688 11.6 21.061 12.56 20.1532C14.165 18.6455 16.91 19.4455 20 19.4455C23.105 19.4455 25.82 18.6455 27.44 20.1532C28.415 21.061 28.97 22.1534 28.97 23.3381C28.97 28.246 24.95 28.4922 20 28.4922ZM16.235 20.7841C15.245 20.7841 14.435 22.0149 14.435 23.5227C14.435 25.0305 15.245 26.2767 16.235 26.2767C17.225 26.2767 18.035 25.0459 18.035 23.5227C18.035 21.9995 17.225 20.7841 16.235 20.7841ZM23.765 20.7841C22.775 20.7841 21.965 21.9995 21.965 23.5227C21.965 25.0459 22.775 26.2767 23.765 26.2767C24.755 26.2767 25.565 25.0459 25.565 23.5227C25.565 21.9995 24.77 20.7841 23.765 20.7841Z\" fill=\"#A3A3A3\"></path></svg>"
+module.exports = "<svg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M28.4375 2.23438C32.8672 4.45312 35.9063 7.375 37.8906 11.7969L35.4375 12.9687C33.875 9.76562 30.5156 6.40625 27.2656 4.80469\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M38.5937 13.2031C40.1562 17.8906 40.2344 22.1094 38.5156 26.6406L35.9531 25.75C37.125 22.3672 37.125 17.625 35.9531 14.1875\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.125s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M37.9219 28.0625C35.7109 32.4844 32.7813 35.5234 28.3594 37.5156L27.1719 35.0625C30.3984 33.5 33.75 30.1406 35.3516 26.8906\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.250s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M26.9141 38.1641C22.2266 39.7266 18.0078 39.8047 13.4766 38.0859L14.3672 35.5078C17.7422 36.6797 22.4922 36.6797 25.9297 35.5078\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.375s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M12.0547 37.7187C7.63281 35.5 4.59375 32.5781 2.60156 28.1562L5.05469 26.9688C6.61719 30.1953 9.97656 33.5469 13.2266 35.1484\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.500s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M1.85156 26.7734C0.289062 22.0859 0.210938 17.8672 1.92969 13.3359L4.50781 14.2266C3.33594 17.625 3.33594 22.3516 4.50781 25.7891\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.625s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M2.48438 11.7969C4.6875 7.35938 7.61719 4.32031 12.0312 2.34375L13.2266 4.78906C10.0078 6.35156 6.66406 9.71094 5.05469 12.9609\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.750s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M13.5156 1.64062C18.2031 0.078125 22.4219 0 26.9531 1.71875L26.0547 4.28125C22.6719 3.10937 17.9297 3.10937 14.4922 4.28125\" fill=\"#eee\"><animate attributeName=\"fill\" values=\"#eee;#999;#eee;#eee\" begin=\"0.875s\" dur=\"0.875s\" repeatCount=\"indefinite\"></animate></path><path d=\"M15.3906 35.8594V32.1094C15.3906 32.1094 15.0781 31.7969 12.8125 32.0313C10.625 32.2656 7.96875 26.875 7.73438 26.6406C9.60938 25.8594 11.0938 28.6719 12.8125 29.6094H15.2344C15.2344 29.6094 15.4688 26.1719 16.7969 26.7188C18.125 27.1875 11.1719 26.7969 9.21875 21.9531C7.26562 17.1094 10.7031 12.1094 10.7812 12.9688C10.7812 13.6719 9.45312 10.2344 10 9.375C11.5625 7.5 13.9062 10.2344 15.3906 10.5469C15.7812 10.5469 16.7969 9.92188 20 10C23.2031 10 24.2969 10.625 24.6875 10.4688C26.4062 9.6875 28.6719 7.96875 29.7656 9.14063C30.5469 10.0781 29.6875 13.9063 29.6875 12.9688C29.6875 12.0313 33.0469 19.2969 30.1562 23.2813C27.8906 26.875 22.7344 26.6406 23.5938 26.875C25.2344 28.0469 24.6875 33.9844 24.6875 35.8594L22.9688 36.1719V30.3906C22.9688 29.6875 22.2656 29.6094 22.2656 29.6875V36.3281L20.625 36.4063V29.6875H19.8438V36.4063L18.2812 36.3281V29.8438C18.2812 29.8438 17.6562 29.7656 17.6562 30.625V36.25\" fill=\"#eee\"></path></svg>"
 
 /***/ }),
 /* 5 */
