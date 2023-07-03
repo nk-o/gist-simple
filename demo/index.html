@@ -18,36 +18,65 @@
     <link type="text/css" rel="stylesheet" href="../dist/gist-simple.css">
     <script src="../dist/gist-simple.min.js"></script>
 
-    <h2>data-attribute init</h2>
-    <div class="gist-simple" data-id="b58861072e53b12430ec2f78a99dbe4d" data-file="example-1.html"></div>
-    <div class="gist-simple" data-id="b58861072e53b12430ec2f78a99dbe4d" data-file="example-2.html"></div>
+    <h2>Basic</h2>
 
-    <h2>JS init</h2>
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-1.html"
+    ></div>
+
+    <h2>Hidden Numbers and Footer</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-2.html"
+      data-show-footer="false"
+      data-show-line-numbers="false"
+    ></div>
+
+    <h2>With Caption</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-3.html"
+      data-caption="https://gist.github.com/nk-o/b58861072e53b12430ec2f78a99dbe4d/"
+    ></div>
+
+    <h2>Specific Lines Only</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-4.html"
+      data-lines="1,5"
+      data-lines-expanded="false"
+    ></div>
+
+    <h2>Highlight Lines</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-5.html"
+      data-highlight-lines="2-4"
+    ></div>
+
+    <h2>Expand Lines (JS Init)</h2>
+
     <div class="gist-simple gist-simple-example-js-init"></div>
 
-    <h2>All Available Options</h2>
-    <div class="gist-simple gist-simple-example-all-options"></div>
-    <div class="gist-simple gist-simple-example-all-options-2"></div>
+    <div><a href="https://codepen.io/_nK/pen/KLQZqr">CodePen Example</a></div>
 
     <script>
       gistSimple(document.querySelector('.gist-simple-example-js-init'), {
         id: 'b58861072e53b12430ec2f78a99dbe4d',
-        file: 'example-3.html',
-      });
-
-      gistSimple(document.querySelector('.gist-simple-example-all-options'), {
-        id: 'b58861072e53b12430ec2f78a99dbe4d',
-        file: 'example-4.html',
-        caption: 'Custom Caption Here',
-        lines: '3-4',
-        linesExpanded: true,
-      });
-      gistSimple(document.querySelector('.gist-simple-example-all-options-2'), {
-        id: 'b58861072e53b12430ec2f78a99dbe4d',
         file: 'example-5.html',
-        highlightLines: '2-3',
-        showFooter: false,
-        showLineNumbers: false,
+        caption: 'Custom Caption Here',
+        lines: '1,5',
+        linesExpanded: true,
       });
     </script>
   </body>
