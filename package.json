@@ -1,6 +1,5 @@
 {
   "name": "gist-simple",
-  "title": "Gist Simple - JS Gist Loader",
   "version": "2.0.0",
   "description": "JS for Gist code block loading",
   "license": "MIT",
