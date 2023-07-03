@@ -161,6 +161,13 @@ class GistSimple {
         // option to enable caching of the gists
         if (enableCache) {
           if (cache[cacheUrl]) {
+            // Cached response.
+            if (cache[cacheUrl].div) {
+              successCallback(cache[cacheUrl]);
+
+              return false;
+            }
+
             // loading the response from cache and preventing the ajax call
             cache[cacheUrl].done((response) => {
               successCallback(response);
@@ -184,8 +191,9 @@ class GistSimple {
         }
 
         if (enableCache) {
-          if (cache[cacheUrl]) {
+          if (cache[cacheUrl] && cache[cacheUrl].resolve) {
             cache[cacheUrl].resolve(response);
+            cache[cacheUrl] = response;
           }
         }
 
