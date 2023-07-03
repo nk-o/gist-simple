@@ -1,5 +1,4 @@
 import extend from './utils/extend';
-import camelToDash from './utils/camel-to-dash';
 import Deferred from './utils/deferred';
 import loadJSONP from './utils/load-jsonp';
 import loadCSS from './utils/load-css';
@@ -27,10 +26,8 @@ class GistSimple {
     const dataOptions = self.$container.dataset || {};
     const pureDataOptions = {};
     Object.keys(dataOptions).forEach((key) => {
-      const dashKey = camelToDash(key);
-
-      if (dashKey && typeof self.defaults[dashKey] !== 'undefined') {
-        pureDataOptions[dashKey] = dataOptions[key];
+      if (key && typeof self.defaults[key] !== 'undefined') {
+        pureDataOptions[key] = dataOptions[key];
       }
     });
 

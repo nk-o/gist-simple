@@ -61,10 +61,6 @@
     return out;
   }
 
-  function camelToDash(str) {
-    return str.replace(/[A-Z]/g, m => `-${m.toLowerCase()}`);
-  }
-
   // Deferred
   // thanks http://stackoverflow.com/questions/18096715/implement-deferred-object-without-using-jquery
   function Deferred() {
@@ -217,9 +213,8 @@
       const dataOptions = self.$container.dataset || {};
       const pureDataOptions = {};
       Object.keys(dataOptions).forEach(key => {
-        const dashKey = camelToDash(key);
-        if (dashKey && typeof self.defaults[dashKey] !== 'undefined') {
-          pureDataOptions[dashKey] = dataOptions[key];
+        if (key && typeof self.defaults[key] !== 'undefined') {
+          pureDataOptions[key] = dataOptions[key];
         }
       });
       self.options = extend({}, self.defaults, pureDataOptions, userOptions);
