@@ -37,7 +37,7 @@ We provide a version of Gist Simple built as ESM (gist-simple.esm.js and gist-si
 
 ```html
 <script type="module">
-  import gistSimple from "https://cdn.jsdelivr.net/npm/gist-simple@1/+esm";
+  import gistSimple from "https://cdn.jsdelivr.net/npm/gist-simple@2/+esm";
 </script>
 ```
 
@@ -53,8 +53,8 @@ Gist Simple may be also used in a traditional way by including script in HTML an
 ### UMD CDN
 
 ```html
-<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gist-simple@1/dist/gist-simple.css">
-<script src="https://cdn.jsdelivr.net/npm/gist-simple@1/dist/gist-simple.min.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gist-simple@2/dist/gist-simple.css">
+<script src="https://cdn.jsdelivr.net/npm/gist-simple@2/dist/gist-simple.min.js"></script>
 ```
 
 ### CJS (Bundlers like Webpack)

@@ -1,5 +1,5 @@
 /*!
- * Gist Simple v1.0.1 (https://github.com/nk-o/gist-simple)
+ * Gist Simple v2.0.0 (https://github.com/nk-o/gist-simple)
  * Copyright 2023 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/gist-simple/blob/master/LICENSE)
  */
@@ -344,6 +344,12 @@
           // option to enable caching of the gists
           if (enableCache) {
             if (cache[cacheUrl]) {
+              // Cached response.
+              if (cache[cacheUrl].div) {
+                successCallback(cache[cacheUrl]);
+                return false;
+              }
+
               // loading the response from cache and preventing the ajax call
               cache[cacheUrl].done(response => {
                 successCallback(response);
@@ -365,8 +371,9 @@
             self.options.onAjaxSuccess.call(self, response);
           }
           if (enableCache) {
-            if (cache[cacheUrl]) {
+            if (cache[cacheUrl] && cache[cacheUrl].resolve) {
               cache[cacheUrl].resolve(response);
+              cache[cacheUrl] = response;
             }
           }
           successCallback(response);
