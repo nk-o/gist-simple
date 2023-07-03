@@ -18,6 +18,7 @@
     "build": "rollup --config --sourcemap",
     "js-lint": "eslint src/",
     "js-lint-fix": "eslint --fix src/",
+    "test": "npm run js-lint",
     "prepare": "husky install"
   },
   "repository": {
