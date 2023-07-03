@@ -483,7 +483,7 @@
             collapsableLineNumbers.push(index + 1);
             el.parentNode.style.display = 'none';
           } else {
-            el.remove();
+            el.parentNode.remove();
           }
         }
       });
