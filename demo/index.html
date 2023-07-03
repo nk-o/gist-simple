@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+
+    <style>
+      body > * {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <link type="text/css" rel="stylesheet" href="../dist/gist-simple.css">
+    <script src="../dist/gist-simple.min.js"></script>
+
+    <h2>data-attribute init</h2>
+    <div class="gist-simple" data-id="b58861072e53b12430ec2f78a99dbe4d" data-file="example-1.html"></div>
+    <div class="gist-simple" data-id="b58861072e53b12430ec2f78a99dbe4d" data-file="example-2.html"></div>
+
+    <h2>JS init</h2>
+    <div class="gist-simple gist-simple-example-js-init"></div>
+
+    <h2>All Available Options</h2>
+    <div class="gist-simple gist-simple-example-all-options"></div>
+    <div class="gist-simple gist-simple-example-all-options-2"></div>
+
+    <script>
+      gistSimple(document.querySelector('.gist-simple-example-js-init'), {
+        id: 'b58861072e53b12430ec2f78a99dbe4d',
+        file: 'example-3.html',
+      });
+
+      gistSimple(document.querySelector('.gist-simple-example-all-options'), {
+        id: 'b58861072e53b12430ec2f78a99dbe4d',
+        file: 'example-4.html',
+        caption: 'Custom Caption Here',
+        lines: '3-4',
+        linesExpanded: true,
+      });
+      gistSimple(document.querySelector('.gist-simple-example-all-options-2'), {
+        id: 'b58861072e53b12430ec2f78a99dbe4d',
+        file: 'example-5.html',
+        highlightLines: '2-3',
+        showFooter: false,
+        showLineNumbers: false,
+      });
+    </script>
+  </body>
+</html>

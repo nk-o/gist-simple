@@ -1,64 +1,55 @@
 {
-    "name": "gist-simple",
-    "title": "Gist Simple - jQuery Gist Loader",
-    "version": "1.0.1",
-    "description": "jQuery plugin for Gist code loading",
-    "license": "MIT",
-    "homepage": "https://github.com/nk-o/gist-simple",
-    "author": "nK <https://nkdev.info>",
-    "files": [
-        "src",
-        "dist"
-    ],
-    "scripts": {
-        "build": "gulp build",
-        "js-lint": "eslint src/",
-        "js-lint-fix": "eslint --fix src/",
-        "precommit": "npm run js-lint",
-        "prepush": "npm run js-lint"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/nk-o/gist-simple.git"
-    },
-    "bugs": {
-        "url": "https://github.com/nk-o/gist-simple/issues"
-    },
-    "keywords": [
-        "gist",
-        "code",
-        "preformatted",
-        "embed"
-    ],
-    "devDependencies": {
-        "@babel/core": "^7.4.5",
-        "@babel/preset-env": "^7.4.5",
-        "@babel/register": "^7.4.4",
-        "babel-loader": "^8.0.6",
-        "browser-sync": "^2.26.5",
-        "del": "^4.1.1",
-        "eslint": "^5.16.0",
-        "eslint-config-airbnb": "^17.1.0",
-        "eslint-plugin-import": "^2.17.2",
-        "eslint-plugin-jsx-a11y": "^6.2.1",
-        "eslint-plugin-react": "^7.13.0",
-        "gulp": "^3.9.1",
-        "gulp-header": "^2.0.7",
-        "gulp-if": "^2.0.2",
-        "gulp-load-plugins": "^1.5.0",
-        "gulp-plumber": "^1.2.1",
-        "gulp-rename": "^1.4.0",
-        "gulp-sequence": "^1.0.0",
-        "gulp-sourcemaps": "^2.6.5",
-        "gulp-uglify": "^3.0.2",
-        "gulp-watch": "^5.0.1",
-        "husky": "^0.14.3",
-        "json-file": "^0.1.0",
-        "vinyl-named": "^1.1.0",
-        "webpack-stream": "^5.2.1",
-        "svg-inline-loader": "^0.8.0"
-    },
-    "dependencies": {
-        "global": "^4.3.2"
-    }
+  "name": "gist-simple",
+  "title": "Gist Simple - JS Gist Loader",
+  "version": "1.0.1",
+  "description": "JS for Gist code block loading",
+  "license": "MIT",
+  "homepage": "https://github.com/nk-o/gist-simple",
+  "author": "nK <https://nkdev.info>",
+  "main": "dist/gist-simple.cjs",
+  "module": "dist/gist-simple.esm.js",
+  "unpkg": "dist/gist-simple.min.js",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev rollup --config --sourcemap --watch",
+    "build": "rollup --config --sourcemap",
+    "js-lint": "eslint src/",
+    "js-lint-fix": "eslint --fix src/",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nk-o/gist-simple.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nk-o/gist-simple/issues"
+  },
+  "keywords": [
+    "gist",
+    "code",
+    "preformatted",
+    "embed"
+  ],
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.22.5",
+    "@babel/plugin-syntax-import-assertions": "^7.22.5",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-replace": "^5.0.2",
+    "@rollup/plugin-terser": "^0.4.3",
+    "babel-plugin-annotate-pure-calls": "^0.4.0",
+    "browserslist-config-nk": "^1.1.1",
+    "cross-env": "^7.0.3",
+    "eslint-config-nk": "^1.2.0",
+    "husky": "^8.0.3",
+    "json-file": "^0.1.0",
+    "lint-staged": "^13.2.3",
+    "prettier-config-nk": "^1.1.1",
+    "rollup": "^3.26.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-serve": "^2.0.2",
+    "rollup-plugin-svg": "^2.0.0"
+  }
 }
