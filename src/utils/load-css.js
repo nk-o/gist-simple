@@ -3,18 +3,18 @@
  */
 const LOADED_FLAG = '__gist_simple_css_loaded__';
 
-export default function loadCSS(url, callback) {
+export default function loadCSS(url, callback, doc = document) {
   // Already exists.
-  let el = document.body.querySelector(`link[href="${url}"]`);
+  let el = doc.body.querySelector(`link[href="${url}"]`);
 
   if (!el) {
-    el = document.createElement('link');
+    el = doc.createElement('link');
 
     el.href = url;
     el.rel = 'stylesheet';
     el.type = 'text/css';
 
-    document.head.appendChild(el);
+    doc.head.appendChild(el);
   }
 
   if (callback) {

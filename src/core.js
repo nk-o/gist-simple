@@ -134,9 +134,13 @@ class GistSimple {
           }
 
           // Insert gist only after CSS loaded.
-          loadCSS(stylesheet, () => {
-            insertGist(response);
-          });
+          loadCSS(
+            stylesheet,
+            () => {
+              insertGist(response);
+            },
+            self.$container.ownerDocument
+          );
         } else {
           insertGist(response);
         }
