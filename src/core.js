@@ -2,12 +2,13 @@ import extend from './utils/extend';
 import Deferred from './utils/deferred';
 import loadJSONP from './utils/load-jsonp';
 import loadCSS from './utils/load-css';
-import iconPreloader from './icons/preloader.svg';
 import iconArrow from './icons/arrow.svg';
 import defaults from './defaults';
 
 const cache = {};
 let instanceID = 0;
+
+const loadingIcon = '<span class="gist-simple-loading-icon"><i></i><i></i><i></i></span>';
 
 // Gist Simple class
 class GistSimple {
@@ -74,7 +75,7 @@ class GistSimple {
     const enableCache = options.enableCache || cache[cacheUrl];
 
     // show preloader.
-    self.insertContent(iconPreloader, true);
+    self.insertContent(loadingIcon, true);
 
     function insertGist(response) {
       // reference to div
