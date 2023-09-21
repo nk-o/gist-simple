@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.0.1] - Sep 21, 2023
+
+- added support for styles loading when gist placed inside iframe
+- changed loading icon animation
+
 ## [2.0.0] - Jul 4, 2023
 
 - removed jQuery requirement, this library is for vanilla JS now

@@ -1,5 +1,5 @@
 /*!
- * Gist Simple v2.0.0 (https://github.com/nk-o/gist-simple)
+ * Gist Simple v2.0.1 (https://github.com/nk-o/gist-simple)
  * Copyright 2023 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/gist-simple/blob/master/LICENSE)
  */
@@ -141,15 +141,15 @@
    * Load CSS with callback
    */
   const LOADED_FLAG = '__gist_simple_css_loaded__';
-  function loadCSS(url, callback) {
+  function loadCSS(url, callback, doc = document) {
     // Already exists.
-    let el = document.body.querySelector(`link[href="${url}"]`);
+    let el = doc.body.querySelector(`link[href="${url}"]`);
     if (!el) {
-      el = document.createElement('link');
+      el = doc.createElement('link');
       el.href = url;
       el.rel = 'stylesheet';
       el.type = 'text/css';
-      document.head.appendChild(el);
+      doc.head.appendChild(el);
     }
     if (callback) {
       // Is loaded already.
@@ -165,8 +165,6 @@
       }, false);
     }
   }
-
-  var iconPreloader = "<svg width=\"30\" height=\"30\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\">\n  <style>\n    .gist_simple_spinner_nOfF {\n      animation: gist_simple_spinner_qtyZ 2s cubic-bezier(0.36, .6, .31, 1) infinite\n    }\n\n    .gist_simple_spinner_fVhf {\n      animation-delay: -.5s\n    }\n\n    .gist_simple_spinner_piVe {\n      animation-delay: -1s\n    }\n\n    .gist_simple_spinner_MSNs {\n      animation-delay: -1.5s\n    }\n\n    @keyframes gist_simple_spinner_qtyZ {\n      0% {\n        r: 0\n      }\n\n      25% {\n        r: 3px;\n        cx: 4px\n      }\n\n      50% {\n        r: 3px;\n        cx: 12px\n      }\n\n      75% {\n        r: 3px;\n        cx: 20px\n      }\n\n      100% {\n        r: 0;\n        cx: 20px\n      }\n    }\n  </style>\n  <circle fill=\"rgba(144, 144, 144, 0.6)\" class=\"gist_simple_spinner_nOfF\" cx=\"4\" cy=\"12\" r=\"3\" />\n  <circle fill=\"rgba(144, 144, 144, 0.6)\" class=\"gist_simple_spinner_nOfF gist_simple_spinner_fVhf\" cx=\"4\" cy=\"12\"\n    r=\"3\" />\n  <circle fill=\"rgba(144, 144, 144, 0.6)\" class=\"gist_simple_spinner_nOfF gist_simple_spinner_piVe\" cx=\"4\" cy=\"12\"\n    r=\"3\" />\n  <circle fill=\"rgba(144, 144, 144, 0.6)\" class=\"gist_simple_spinner_nOfF gist_simple_spinner_MSNs\" cx=\"4\" cy=\"12\"\n    r=\"3\" />\n</svg>";
 
   var iconArrow = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 44\" style=\"height: 15px; position: relative; top: 2px;\">\n  <path fill=\"#bbb\" fill-rule=\"evenodd\"\n    d=\"M8.0066 16.05305v-7.6523c0-.82422-.47656-1.0273-1.0586-.4414l-3.5117 3.5039c-1.8789 1.875-4.6953-.94142-2.8164-2.8164L8.7215.61564c.68359-.67579 1.8008-.6797 2.4922 0l8.1641 8.0312c1.8789 1.875-.9375 4.6914-2.8164 2.8164l-3.5078-3.5039c-.58984-.58985-1.0625-.38673-1.0625.4414v27.30827c0 .82031.47656 1.0273 1.0586.44141l3.5117-3.5039c1.8789-1.875 4.6953.9375 2.8164 2.8164l-8.1016 8.0273c-.6836.6797-1.8008.6797-2.4922 0l-8.1641-8.0273c-1.8789-1.8789.9375-4.6914 2.8164-2.8164l3.5078 3.5039c.58984.58984 1.0625.38672 1.0625-.4414V16.05304z\" />\n</svg>";
 
@@ -197,6 +195,7 @@
 
   const cache = {};
   let instanceID = 0;
+  const loadingIcon = '<span class="gist-simple-loading-icon"><i></i><i></i><i></i></span>';
 
   // Gist Simple class
   class GistSimple {
@@ -259,7 +258,7 @@
       const enableCache = options.enableCache || cache[cacheUrl];
 
       // show preloader.
-      self.insertContent(iconPreloader, true);
+      self.insertContent(loadingIcon, true);
       function insertGist(response) {
         // reference to div
         const $responseDiv = document.createElement('div');
@@ -320,7 +319,7 @@
             // Insert gist only after CSS loaded.
             loadCSS(stylesheet, () => {
               insertGist(response);
-            });
+            }, self.$container.ownerDocument);
           } else {
             insertGist(response);
           }
