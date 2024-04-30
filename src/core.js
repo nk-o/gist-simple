@@ -63,7 +63,17 @@ class GistSimple {
       data.file = options.file;
     }
 
+    if (options.theme === 'system') {
+      options.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    console.log('options', options);
+
     self.$container.classList.add('gist-simple');
+
+    if (options.theme === 'dark') {
+      self.$container.style.filter = 'invert(.8) contrast(1.6) hue-rotate(180deg)';
+    }
 
     // if the id doesn't exist, then ignore the code block
     if (!options.id) {
@@ -90,13 +100,13 @@ class GistSimple {
       self.insertContent($responseDiv.innerHTML);
 
       // highlight lines
-      self.highlightLines(options.highlightLines);
+      self.highlightLines(options.highlightLines, options.theme);
 
       // show only specific lines
-      self.showSpecificLines(lines, options.linesExpanded);
+      self.showSpecificLines(lines, options.linesExpanded, options.theme);
 
       // show caption
-      self.showCaption(options.caption);
+      self.showCaption(options.caption, options.theme);
 
       // remove footer
       if (!options.showFooter) {
@@ -290,7 +300,7 @@ class GistSimple {
   }
 
   // highlight lines.
-  highlightLines(lines) {
+  highlightLines(lines, theme) {
     if (!lines) {
       return;
     }
@@ -304,20 +314,21 @@ class GistSimple {
     // find all .js-file-line tds (actual code lines) that match the highlightLines and add the highlight class
     this.$container.querySelectorAll('.js-file-line').forEach((el, index) => {
       if (highlightLineNumbers.indexOf(index + 1) !== -1) {
-        el.style.backgroundColor = 'rgb(255, 255, 204)';
+        el.style.backgroundColor = theme === 'dark' ? 'rgb(235, 233, 204)' : 'rgb(255, 255, 204)';
       }
     });
   }
 
   // show only specific lines.
   // value example: "2", "1-5", "1,4", "1,4,6-8"
-  showSpecificLines(lines, linesExpanded) {
+  showSpecificLines(lines, linesExpanded, theme) {
     if (!lines) {
       return;
     }
 
     const lineNumbers = this.getLineNumbers(lines);
     const collapsableLineNumbers = [];
+    const $bgColor = theme === 'dark' ? '#f1f1f1' : '#f9f9f9';
 
     // find all trs containing code lines that don't exist in the line param
     this.$container.querySelectorAll('.js-file-line').forEach((el, index) => {
@@ -373,14 +384,14 @@ class GistSimple {
         const lineNumberElement = `
           <td
             class="blob-num js-line-number collapsed"
-            style="background-color: #f9f9f9; color: #999; font-size: 12px; font-style: italic; text-align: center; padding-top: 5px !important; padding-bottom: 5px !important;"
+            style="background-color: ${$bgColor}; color: #999; font-size: 12px; font-style: italic; text-align: center; padding-top: 5px !important; padding-bottom: 5px !important;"
           ><!-- Icon Here --></td>
         `;
 
         const lineCodeElement = `
           <td
             class="blob-code blob-code-inner js-file-line collapsed"
-            style="background-color: #f9f9f9; color: #999; font-size: 12px; font-style: italic; padding-top: 5px !important; padding-bottom: 5px !important;"
+            style="background-color: ${$bgColor}; color: #999; font-size: 12px; font-style: italic; padding-top: 5px !important; padding-bottom: 5px !important;"
           >... Lines ${firstLine} - ${lastLine}</td>
         `;
 
@@ -406,7 +417,7 @@ class GistSimple {
   }
 
   // show caption.
-  showCaption(caption) {
+  showCaption(caption, theme) {
     if (!caption) {
       return;
     }
@@ -414,15 +425,16 @@ class GistSimple {
     const tbody = this.$container.querySelector('table tbody');
     const $row = document.createElement('tr');
     const $captionColumn = document.createElement('td');
+    const $bgColor = theme === 'dark' ? '#f1f1f1' : '#f9f9f9';
 
     $captionColumn.setAttribute(
       'style',
-      'padding: 10px !important; border-bottom: 10px solid white; background-color: #f9f9f9; font-weight: bold;'
+      `padding: 10px !important; border-bottom: 10px solid white; background-color: ${$bgColor}; font-weight: bold;`
     );
     $captionColumn.innerHTML = caption;
 
     const $rowBorder = document.createElement('td');
-    $rowBorder.setAttribute('style', 'background-color: #f9f9f9; border-bottom: 10px solid white;');
+    $rowBorder.setAttribute('style', `background-color: ${$bgColor}; border-bottom: 10px solid white;`);
 
     $row.append($rowBorder);
     $row.append($captionColumn);
