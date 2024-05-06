@@ -19,6 +19,15 @@
       [data-theme='dark'] a {
         color: #fff;
       }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #fff;
+        }
+        a {
+          color: #fff;
+        }
+      }
     </style>
   </head>
   <body>
@@ -114,9 +123,7 @@
     </script>
 
     <script>
-      // detect dark theme
-      const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', darkTheme ? 'dark' : 'light');
+      // Select custom color scheme.
       document.getElementById('theme-selector').addEventListener('change', (e) => {
         const theme = e.target.value;
         document.documentElement.setAttribute('data-theme', theme);
