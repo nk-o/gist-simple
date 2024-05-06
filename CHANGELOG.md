@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.0] - May 6, 2024
+
+- added support for dark color scheme in automatic and manual way using `theme` option
+
 ## [2.0.1] - Sep 21, 2023
 
 - added support for styles loading when gist placed inside iframe

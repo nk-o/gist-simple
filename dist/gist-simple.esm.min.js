@@ -1,5 +1,5 @@
 /*!
- * Gist Simple v2.0.1 (https://github.com/nk-o/gist-simple)
+ * Gist Simple v2.1.0 (https://github.com/nk-o/gist-simple)
  * Copyright 2024 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/gist-simple/blob/master/LICENSE)
  */
