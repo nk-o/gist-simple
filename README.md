@@ -105,17 +105,18 @@ $.fn.newGistSimple = gistSimplePlugin // give $().newGistSimple the Gist Simple 
 ```
 
 ## Options
-Name | Type | Default | Description
-:--- | :--- | :------ | :----------
-id | string | `` | Gist ID.
-file | string | `` | Specific file name.
-caption | string | `` | Caption, that will be shown above code.
-lines | string | `` | Show only specific code lines. Example: "2", "1-5", "1,4", "1,4,6-8".
-linesExpanded | boolean | `false` | Hidden lines may be expanded.
-highlightLines | string | `` | Highlight specific code lines. Example: "2", "1-5", "1,4", "1,4,6-8".
-showFooter | boolean | `true` | Show footer section.
-showLineNumbers | boolean | `true` | Show line numbers section.
-enableCache | boolean | `true` | Enable AJAX caching.
+Name | Type | Default  | Description
+:--- | :--- |:---------| :----------
+id | string | ``       | Gist ID.
+theme | string | `system` | Theme: `system`, `light`, `dark`.
+file | string | ``       | Specific file name.
+caption | string | ``       | Caption, that will be shown above code.
+lines | string | ``       | Show only specific code lines. Example: "2", "1-5", "1,4", "1,4,6-8".
+linesExpanded | boolean | `false`  | Hidden lines may be expanded.
+highlightLines | string | ``       | Highlight specific code lines. Example: "2", "1-5", "1,4", "1,4,6-8".
+showFooter | boolean | `true`   | Show footer section.
+showLineNumbers | boolean | `true`   | Show line numbers section.
+enableCache | boolean | `true`   | Enable AJAX caching.
 
 ## For Developers
 

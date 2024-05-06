@@ -12,11 +12,35 @@
         margin-left: auto;
         margin-right: auto;
       }
+      [data-theme='dark'] body {
+        background-color: #111;
+        color: #fff;
+      }
+      [data-theme='dark'] a {
+        color: #fff;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #111;
+          color: #fff;
+        }
+        a {
+          color: #fff;
+        }
+      }
     </style>
   </head>
   <body>
     <link type="text/css" rel="stylesheet" href="../dist/gist-simple.css">
     <script src="../dist/gist-simple.min.js"></script>
+
+    <label style="position:absolute; right:1.2rem; top:1.2rem;">Body appearance
+      <select name="theme" id="theme-selector">
+        <option selected value="system">System</option>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </label>
 
     <h2>Basic</h2>
 
@@ -24,6 +48,24 @@
       class="gist-simple"
       data-id="b58861072e53b12430ec2f78a99dbe4d"
       data-file="example-1.html"
+    ></div>
+
+    <h2>Dark Theme</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-1.html"
+      data-theme="dark"
+    ></div>
+
+    <h2>Light Theme</h2>
+
+    <div
+      class="gist-simple"
+      data-id="b58861072e53b12430ec2f78a99dbe4d"
+      data-file="example-1.html"
+      data-theme="light"
     ></div>
 
     <h2>Hidden Numbers and Footer</h2>
@@ -77,6 +119,14 @@
         caption: 'Custom Caption Here',
         lines: '1,5',
         linesExpanded: true,
+      });
+    </script>
+
+    <script>
+      // Select custom color scheme.
+      document.getElementById('theme-selector').addEventListener('change', (e) => {
+        const theme = e.target.value;
+        document.documentElement.setAttribute('data-theme', theme);
       });
     </script>
   </body>

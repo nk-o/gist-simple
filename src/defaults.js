@@ -1,5 +1,6 @@
 export default {
   id: '',
+  theme: 'system',
   file: '',
   caption: '',
   lines: '',
