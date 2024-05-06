@@ -1,6 +1,6 @@
 /*!
  * Gist Simple v2.0.1 (https://github.com/nk-o/gist-simple)
- * Copyright 2023 nK <https://nkdev.info>
+ * Copyright 2024 nK <https://nkdev.info>
  * Licensed under MIT (https://github.com/nk-o/gist-simple/blob/master/LICENSE)
  */
 /**
@@ -133,6 +133,7 @@ var iconArrow = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 44\"
 
 var defaults = {
   id: '',
+  theme: 'system',
   file: '',
   caption: '',
   lines: '',
@@ -211,6 +212,9 @@ class GistSimple {
       data.file = options.file;
     }
     self.$container.classList.add('gist-simple');
+    if (options.theme === 'dark' || options.theme === 'system') {
+      self.$container.classList.add(`gist-simple-${options.theme}`);
+    }
 
     // if the id doesn't exist, then ignore the code block
     if (!options.id) {
@@ -431,7 +435,7 @@ class GistSimple {
     // find all .js-file-line tds (actual code lines) that match the highlightLines and add the highlight class
     this.$container.querySelectorAll('.js-file-line').forEach((el, index) => {
       if (highlightLineNumbers.indexOf(index + 1) !== -1) {
-        el.style.backgroundColor = 'rgb(255, 255, 204)';
+        el.classList.add('gist-simple-highlighted-line');
       }
     });
   }
@@ -482,16 +486,10 @@ class GistSimple {
           $collapsibleIcon.closest('tr').remove();
         });
         const lineNumberElement = `
-          <td
-            class="blob-num js-line-number collapsed"
-            style="background-color: #f9f9f9; color: #999; font-size: 12px; font-style: italic; text-align: center; padding-top: 5px !important; padding-bottom: 5px !important;"
-          ><!-- Icon Here --></td>
+          <td class="blob-num js-line-number collapsed"><!-- Icon Here --></td>
         `;
         const lineCodeElement = `
-          <td
-            class="blob-code blob-code-inner js-file-line collapsed"
-            style="background-color: #f9f9f9; color: #999; font-size: 12px; font-style: italic; padding-top: 5px !important; padding-bottom: 5px !important;"
-          >... Lines ${firstLine} - ${lastLine}</td>
+          <td class="blob-code blob-code-inner js-file-line collapsed">... Lines ${firstLine} - ${lastLine}</td>
         `;
         const $lineElement = document.createElement('tr');
         $lineElement.innerHTML = lineNumberElement + lineCodeElement;
@@ -516,10 +514,9 @@ class GistSimple {
     const tbody = this.$container.querySelector('table tbody');
     const $row = document.createElement('tr');
     const $captionColumn = document.createElement('td');
-    $captionColumn.setAttribute('style', 'padding: 10px !important; border-bottom: 10px solid white; background-color: #f9f9f9; font-weight: bold;');
+    $row.classList.add('gist-simple-caption');
     $captionColumn.innerHTML = caption;
     const $rowBorder = document.createElement('td');
-    $rowBorder.setAttribute('style', 'background-color: #f9f9f9; border-bottom: 10px solid white;');
     $row.append($rowBorder);
     $row.append($captionColumn);
     tbody.prepend($row);
