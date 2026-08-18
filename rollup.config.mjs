@@ -6,7 +6,7 @@ import serve from 'rollup-plugin-serve';
 import copy from 'rollup-plugin-copy';
 import svg from 'rollup-plugin-svg';
 
-import data from './package.json' assert { type: 'json' };
+import data from './package.json' with { type: 'json' };
 
 const year = new Date().getFullYear();
 
